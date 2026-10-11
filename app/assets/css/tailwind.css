@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* ── Fixed palette ───────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink:     #0f1d33;   /* text */
+  --color-steel:   #586579;   /* secondary text (AA on white and on surface) */
+  --color-surface: #f5f7fb;   /* section backgrounds */
+  --color-line:    #e3e8f0;   /* borders */
+  --color-field:   #8a94a5;   /* form field borders (3:1 on white) */
+
+  --radius:       0.75rem;    /* buttons, fields */
+  --radius-card:  1rem;       /* cards */
+  --radius-panel: 1.5rem;     /* large panels */
+
+  --shadow-card: 0 4px 24px rgb(15 23 42 / 0.07);
+  --shadow-lift: 0 14px 44px rgb(15 23 42 / 0.14);
+  --shadow-float: 0 24px 60px -12px rgb(2 8 23 / 0.45);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* ── Brand colours, set in the admin and injected on <html> during server rendering ──
+   Each background has a computed text colour (utils/color.ts), readable whatever the hue.
+   The dark "night" surfaces are tinted with the brand colour so they follow it. */
+@theme inline {
+  --color-brand:          var(--brand);
+  --color-on-brand:       var(--on-brand);
+  --color-brand-deep:     var(--brand-deep);
+  --color-on-brand-deep:  var(--on-brand-deep);
+  --color-brand-wash:     color-mix(in oklab, var(--brand) 8%, white);
+  --color-brand-soft:     color-mix(in oklab, var(--brand) 16%, white);
+  --color-accent:         var(--accent);
+  --color-on-accent:      var(--on-accent);
+  --color-accent-deep:    var(--accent-deep);
+  --color-on-accent-deep: var(--on-accent-deep);
+  --color-accent-glow:    color-mix(in oklab, var(--accent) 65%, white);
+  --color-night:          color-mix(in oklab, var(--brand) 14%, #050b17);
+  --color-night-soft:     color-mix(in oklab, var(--brand) 22%, #0b1424);
+}
+
+:root {
+  --brand: #0b5bd3;
+  --on-brand: #ffffff;
+  --brand-deep: #083f94;
+  --on-brand-deep: #ffffff;
+  --accent: #f59e0b;
+  --on-accent: #0f1d33;
+  --accent-deep: #c98209;
+  --on-accent-deep: #0f1d33;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-white text-base leading-relaxed text-ink antialiased;
+  }
+
+  h1, h2, h3 {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  /* Illustrations (components/Illustration.vue): the highlight colour follows the brand */
+  .illustration svg { width: 100%; height: 100%; }
+  .ill-brand { fill: var(--brand); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Tracking numbers: tabular figures and spaced letters, as legible as on a shipping label */
+@utility tracking-code {
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) { padding-inline: 1.5rem; }
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+
+@utility section-title {
+  font-size: 2rem;
+  @media (width >= 64rem) { font-size: 2.75rem; }
+}
+
+@utility section-intro {
+  margin-top: 0.875rem;
+  max-width: 40rem;
+  font-size: 1.125rem;
+  color: var(--color-steel);
+}
+
+/* Small coloured label above a section title */
+@utility kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-brand);
+}
+
+/* Dark backdrop: faint grid and two soft glows in the brand and accent colours */
+@utility night-backdrop {
+  /* Resolved on the element itself, so a local --brand (admin colour preview) applies too */
+  background-color: color-mix(in oklab, var(--brand) 14%, #050b17);
+  background-image:
+    radial-gradient(48rem 28rem at 15% -10%, color-mix(in oklab, var(--brand) 38%, transparent), transparent 70%),
+    radial-gradient(32rem 24rem at 100% 0%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 70%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+}
+
+/* Frosted glass, for elements over a dark backdrop or photo */
+@utility glass {
+  background-color: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  backdrop-filter: blur(16px);
+}
+
+@utility panel {
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+@utility card {
+  background-color: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Cards that are links: lift on hover */
+@utility card-link {
+  transition: box-shadow 250ms, transform 250ms;
+  &:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px); }
+}
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding-inline: 1.375rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  transition: background-color 200ms, box-shadow 200ms, transform 200ms, border-color 200ms, color 200ms;
+  &:hover { transform: translateY(-1px); }
+  &:active { transform: none; }
+  &:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+}
+
+@utility btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--accent) 70%, transparent);
+  &:hover { background-color: var(--color-accent-deep); color: var(--color-on-accent-deep); }
+}
+
+@utility btn-brand {
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  box-shadow: 0 8px 24px -10px color-mix(in oklab, var(--brand) 80%, transparent);
+  &:hover { background-color: var(--color-brand-deep); color: var(--color-on-brand-deep); }
+}
+
+@utility btn-dark {
+  background-color: var(--color-night);
+  color: #fff;
+  &:hover { background-color: var(--color-night-soft); }
+}
+
+/* White button, for dark backgrounds */
+@utility btn-light {
+  background-color: #fff;
+  color: var(--color-ink);
+  &:hover { background-color: var(--color-surface); }
+}
+
+/* Outlined button, for dark backgrounds */
+@utility btn-glass {
+  color: rgb(255 255 255 / 0.88);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  &:hover { color: #fff; border-color: rgb(255 255 255 / 0.4); background-color: rgb(255 255 255 / 0.06); }
+}
+
+/* Outlined button, for light backgrounds */
+@utility btn-ghost {
+  background-color: #fff;
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-card);
+  &:hover { border-color: var(--color-field); }
+}
+
+@utility link {
+  color: var(--color-brand);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  &:hover { text-decoration-thickness: 2.5px; }
+}
+
+/* "Learn more →" style link */
+@utility link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 700;
+  color: var(--color-brand);
+  &:hover { color: var(--color-brand-deep); }
+}
+
+/* Form fields: thin border, coloured halo on focus */
+@utility field {
+  width: 100%;
+  border: 1px solid var(--color-field);
+  border-radius: var(--radius);
+  background-color: #fff;
+  color: var(--color-ink);
+  transition: border-color 150ms, box-shadow 150ms;
+  &:hover { border-color: var(--color-steel); }
+  &:focus { outline: none; border-color: var(--color-brand); box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand) 18%, transparent); }
+  &[aria-invalid="true"] { border-color: #b91c1c; }
+}
