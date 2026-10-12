@@ -25,6 +25,36 @@
         />
       </li>
     </ul>
+
+    <div class="card mt-10 p-6">
+      <h2 class="text-xl">Illustrations</h2>
+      <p class="mt-1 max-w-3xl text-steel">
+        Replace a drawing with one of your photos: it fills the drawing's space everywhere it appears, cropped to fit,
+        so keep the subject in the centre. "Restore" puts the drawing back.
+      </p>
+    </div>
+
+    <ul class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <li v-for="(spot, name) in ILLUSTRATION_SPOTS" :key="name">
+        <AdminImageUpload
+          :label="spot.label"
+          :hint="spot.usage"
+          :src="brandingSrc(settings.images?.[`illustration-${name}`] ?? null)"
+          :custom="!!settings.images?.[`illustration-${name}`]"
+          :endpoint="`/api/settings/images/illustration-${name}`"
+          accept="image/jpeg,image/png,image/webp"
+          :max-bytes="6 * 1024 * 1024"
+          preview-class="aspect-[16/9]"
+          image-class="size-full object-cover"
+          remove-label="Restore the drawing"
+          @updated="(s) => emit('saved', s)"
+        >
+          <template #preview>
+            <Illustration :name="name" class="h-[80%] w-[60%]" />
+          </template>
+        </AdminImageUpload>
+      </li>
+    </ul>
   </section>
 </template>
 

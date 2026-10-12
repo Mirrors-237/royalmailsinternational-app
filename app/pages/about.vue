@@ -9,7 +9,7 @@
 
     <section class="container-site py-24" aria-labelledby="values-title">
       <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.5fr]">
-        <Illustration name="worldwide" class="mx-auto w-full max-w-md" />
+        <IllustrationSpot name="worldwide" svg-class="mx-auto w-full max-w-md" photo-frame="mx-auto aspect-[4/3] w-full max-w-md rounded-3xl shadow-[var(--shadow-lift)]" />
         <div>
       <h2 id="values-title" class="section-title">How we work</h2>
       <ul class="mt-10 space-y-4">
@@ -24,6 +24,8 @@
         </div>
       </div>
     </section>
+
+    <ImageTextBlock placement="about" flush-top />
 
     <section id="find-us" class="scroll-mt-24 bg-surface py-24" aria-labelledby="where-title">
       <div class="container-site grid items-center gap-10 lg:grid-cols-2">

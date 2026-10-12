@@ -1,8 +1,6 @@
 <template>
   <aside class="night-backdrop self-start overflow-hidden rounded-3xl text-white shadow-[var(--shadow-lift)]" aria-labelledby="contact-card-title">
-    <div class="bg-white/95 px-8 pt-6">
-      <Illustration name="support" class="mx-auto h-40" />
-    </div>
+    <IllustrationSpot name="support" frame="bg-white/95 px-8 pt-6" svg-class="mx-auto h-40" photo-frame="h-44" />
     <div class="p-7">
       <h2 id="contact-card-title" class="text-2xl">Need help with a shipment?</h2>
       <p class="mt-2 text-white/70">Have your tracking number to hand and we'll be able to help you faster.</p>

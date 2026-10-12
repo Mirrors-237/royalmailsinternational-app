@@ -57,13 +57,13 @@
       </div>
     </section>
 
+    <ImageTextBlock placement="send" />
+
     <!-- Prepare -->
     <section id="prepare" class="night-backdrop scroll-mt-20 py-24 text-white" aria-labelledby="prepare-title">
       <div class="container-site grid items-center gap-14 lg:grid-cols-[1fr_1.5fr]">
         <div>
-          <div class="rounded-3xl bg-white/95 p-8">
-            <Illustration name="send" class="mx-auto h-64 max-w-xs" />
-          </div>
+          <IllustrationSpot name="send" frame="rounded-3xl bg-white/95 p-8" svg-class="mx-auto h-64 max-w-xs" photo-frame="aspect-[4/3] rounded-3xl" />
         </div>
         <div>
           <h2 id="prepare-title" class="section-title">Preparing your shipment</h2>

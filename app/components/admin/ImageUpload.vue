@@ -1,7 +1,9 @@
 <template>
   <div class="card overflow-hidden">
     <div class="relative grid place-items-center overflow-hidden" :class="[previewClass, dark ? 'night-backdrop' : 'bg-surface']">
-      <img v-if="src" :src="src" :alt="`Current ${label.toLowerCase()}`" :class="imageClass">
+      <!-- The built-in image can be drawn by the parent (e.g. an inline illustration) -->
+      <slot v-if="!custom && $slots.preview" name="preview" />
+      <img v-else-if="src" :src="src" :alt="`Current ${label.toLowerCase()}`" :class="imageClass">
       <span v-else class="px-4 text-center text-sm" :class="dark ? 'text-white/60' : 'text-steel'">{{ emptyText }}</span>
       <span v-if="custom" class="absolute left-3 top-3 rounded-full bg-emerald-600 px-2.5 py-0.5 text-xs font-bold text-white">Uploaded</span>
     </div>

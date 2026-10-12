@@ -36,6 +36,7 @@
       <AdminSettingsContactTab v-else-if="tab === 'contact'" :settings="settings" @saved="apply" />
       <AdminSettingsHomeTab v-else-if="tab === 'home'" :settings="settings" @saved="apply" />
       <AdminSettingsPhotosTab v-else-if="tab === 'photos'" :settings="settings" @saved="apply" />
+      <AdminSettingsBlocksTab v-else-if="tab === 'blocks'" :settings="settings" @saved="apply" />
       <AdminSettingsLegalTab v-else-if="tab === 'legal'" :settings="settings" @saved="apply" />
       <AdminSettingsSeoTab v-else :settings="settings" @saved="apply" />
     </div>
@@ -55,6 +56,7 @@ const tabs = [
   { id: 'contact', label: 'Contact details',   icon: 'lucide:phone' },
   { id: 'home',    label: 'Home page',         icon: 'lucide:house' },
   { id: 'photos',  label: 'Photos',            icon: 'lucide:image' },
+  { id: 'blocks',  label: 'Image blocks',      icon: 'lucide:layout-panel-left' },
   { id: 'legal',   label: 'Legal pages',       icon: 'lucide:scale' },
   { id: 'seo',     label: 'Search engines',    icon: 'lucide:search' },
 ] as const

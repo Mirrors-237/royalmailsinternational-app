@@ -118,7 +118,7 @@
             <TrackForm :initial="number" dark class="mt-8" />
             <p class="mt-6 text-white/75">Still nothing? <NuxtLink to="/contact" class="font-semibold text-white underline underline-offset-4">Contact us</NuxtLink> with the sender's name.</p>
           </div>
-          <div class="hidden rounded-3xl bg-white/95 p-8 lg:block"><Illustration name="track" class="mx-auto h-64" /></div>
+          <IllustrationSpot name="track" frame="hidden rounded-3xl bg-white/95 p-8 lg:block" svg-class="mx-auto h-64" photo-frame="hidden aspect-[4/3] rounded-3xl lg:block" />
         </div>
 
         <!-- API unreachable -->
@@ -170,7 +170,7 @@
           </div>
 
           <div class="night-backdrop overflow-hidden rounded-3xl text-white">
-            <div class="bg-white/95 px-8 pt-5"><Illustration name="support" class="mx-auto h-32" /></div>
+            <IllustrationSpot name="support" frame="bg-white/95 px-8 pt-5" svg-class="mx-auto h-32" photo-frame="h-40" />
             <div class="p-6 sm:p-7">
               <h2 class="text-xl">Need help?</h2>
               <ul class="mt-4 space-y-1">

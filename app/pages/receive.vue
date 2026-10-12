@@ -11,7 +11,7 @@
 
     <section class="container-site py-24" aria-labelledby="steps-title">
       <div class="grid items-center gap-14 lg:grid-cols-[1fr_1.4fr]">
-        <Illustration name="receive" class="mx-auto w-full max-w-md" />
+        <IllustrationSpot name="receive" svg-class="mx-auto w-full max-w-md" photo-frame="mx-auto aspect-[4/3] w-full max-w-md rounded-3xl shadow-[var(--shadow-lift)]" />
         <div>
           <h2 id="steps-title" class="section-title">Three things to do</h2>
           <p class="section-intro">So your parcel arrives without surprises.</p>
@@ -28,12 +28,12 @@
       </div>
     </section>
 
+    <ImageTextBlock placement="receive" flush-top />
+
     <section class="bg-surface py-24" aria-label="Customs and delivery">
       <div class="container-site grid gap-6 lg:grid-cols-2">
         <div id="customs" class="card scroll-mt-24 overflow-hidden">
-          <div class="flex h-52 items-end justify-center bg-violet-50 px-10 pt-6">
-            <Illustration name="customs" class="h-full w-full max-w-[14rem]" />
-          </div>
+          <IllustrationSpot name="customs" frame="flex h-52 items-end justify-center bg-violet-50 px-10 pt-6" svg-class="h-full w-full max-w-[14rem]" photo-frame="h-52" />
           <div class="p-8 lg:p-10">
             <h2 class="text-3xl">Customs duties and taxes</h2>
             <div class="mt-4 space-y-4 text-steel">
@@ -51,9 +51,7 @@
         </div>
 
         <div class="card overflow-hidden">
-          <div class="flex h-52 items-end justify-center bg-amber-50 px-10 pt-6">
-            <Illustration name="courier" class="h-full w-full max-w-[18rem]" />
-          </div>
+          <IllustrationSpot name="courier" frame="flex h-52 items-end justify-center bg-amber-50 px-10 pt-6" svg-class="h-full w-full max-w-[18rem]" photo-frame="h-52" />
           <div class="p-8 lg:p-10">
             <h2 class="text-3xl">On delivery day</h2>
             <ul class="mt-6 space-y-6">

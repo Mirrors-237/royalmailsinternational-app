@@ -32,7 +32,9 @@ export interface SiteSettings {
   logoOnDarkUrl: string | null
   faviconUrl: string | null
   // Website photos replaced in the admin, by slot (see utils/media.ts)
-  images: Partial<Record<MediaSlot, string>>
+  images: Partial<Record<ImageSlot, string>>
+  // Image and text blocks, by placement (see utils/blocks.ts)
+  contentBlocks: Partial<Record<BlockPlacement, ContentBlock>>
   // Home page texts, figures and example shipments (null = built-in defaults, see utils/home.ts)
   homeContent: HomeContent | null
 }
@@ -71,6 +73,7 @@ export const SETTINGS_FALLBACK: SiteSettings = {
   logoOnDarkUrl:   null,
   faviconUrl:      null,
   images:          {},
+  contentBlocks:   {},
   homeContent:     null,
 }
 

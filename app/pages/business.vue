@@ -32,7 +32,7 @@
           </ul>
         </div>
         <div class="rounded-3xl bg-gradient-to-b from-brand-wash to-white p-8 lg:p-12">
-          <Illustration name="business" class="mx-auto w-full max-w-lg" />
+          <IllustrationSpot name="business" svg-class="mx-auto w-full max-w-lg" photo-frame="aspect-[4/3] rounded-2xl" />
           <div class="card mt-8 flex items-center gap-4 p-5">
             <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-accent text-on-accent"><Icon name="lucide:file-check" class="size-6" aria-hidden="true" /></span>
             <p><span class="block font-bold">A tailored offer within 24 hours</span><span class="text-sm text-steel">Based on your routes, volumes and deadlines.</span></p>
@@ -40,6 +40,8 @@
         </div>
       </div>
     </section>
+
+    <ImageTextBlock placement="business" flush-top />
 
     <section class="night-backdrop py-24 text-white" aria-labelledby="how-title">
       <div class="container-site">

@@ -43,7 +43,7 @@
             </li>
           </ul>
         </div>
-        <Illustration name="track" class="mx-auto w-full max-w-sm" />
+        <IllustrationSpot name="track" svg-class="mx-auto w-full max-w-sm" photo-frame="mx-auto aspect-[4/3] w-full max-w-sm rounded-3xl shadow-[var(--shadow-lift)]" />
       </div>
     </section>
 

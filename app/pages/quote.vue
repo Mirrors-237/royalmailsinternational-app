@@ -141,7 +141,7 @@
       <aside class="lg:col-span-4">
         <div class="space-y-6 lg:sticky lg:top-28">
           <div class="night-backdrop overflow-hidden rounded-3xl text-white shadow-[var(--shadow-lift)]">
-            <div class="bg-white/95 px-8 pt-6"><Illustration name="send" class="mx-auto h-40" /></div>
+            <IllustrationSpot name="send" frame="bg-white/95 px-8 pt-6" svg-class="mx-auto h-40" photo-frame="h-44" />
             <div class="p-7 sm:p-8">
             <h2 class="text-2xl">What happens next</h2>
             <ol class="mt-6 space-y-5">

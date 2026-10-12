@@ -27,3 +27,21 @@ export const MEDIA_USAGE: Record<MediaSlot, string> = {
   receive:  'Contact page header; last band of the Receive page.',
   business: 'Last band of the Business page.',
 }
+
+// Illustrations that can be replaced by a photo in the admin (Settings → Photos), and where each appears.
+// The photo then fills the illustration's space everywhere it is used (components/IllustrationSpot.vue).
+export const ILLUSTRATION_SPOTS = {
+  send:      { label: 'Sending',        usage: 'Home page "Sending a parcel or freight?" card; Send page, "Preparing your shipment"; Get a quote page.' },
+  receive:   { label: 'Receiving',      usage: 'Home page "Receiving a parcel?" card; top of the Receive page.' },
+  business:  { label: 'Businesses',     usage: 'Home page "Shipping for a business?" card; top of the Business page.' },
+  customs:   { label: 'Customs',        usage: 'Home page "Customs, explained" card; Receive page, "Customs duties and taxes".' },
+  worldwide: { label: 'Worldwide',      usage: 'Home page "Where we deliver" card; top of the About page.' },
+  support:   { label: 'Customer service', usage: 'Home page "Talk to a real person" card; Help page contact card; tracking result page.' },
+  track:     { label: 'Tracking',       usage: 'Track page; tracking page when a number is not found.' },
+  courier:   { label: 'Delivery',       usage: 'Receive page, "On delivery day".' },
+} as const
+
+export type ReplaceableIllustration = keyof typeof ILLUSTRATION_SPOTS
+
+// Every image that can be uploaded in the admin (same names as MediaSlot in the API)
+export type ImageSlot = MediaSlot | `illustration-${ReplaceableIllustration}` | `block-${BlockPlacement}`

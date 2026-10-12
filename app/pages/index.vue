@@ -56,9 +56,12 @@
         <h2 id="journeys-title" class="sr-only">What would you like to do?</h2>
         <ul class="grid gap-6 lg:grid-cols-3">
           <li v-for="j in journeys" :key="j.title" class="card flex flex-col overflow-hidden !shadow-[var(--shadow-lift)]">
-            <div class="flex h-52 items-end justify-center bg-gradient-to-b from-brand-wash to-white px-10 pt-8">
-              <Illustration :name="j.illustration" class="h-full w-full max-w-[16rem]" />
-            </div>
+            <IllustrationSpot
+              :name="j.illustration"
+              frame="flex h-52 items-end justify-center bg-gradient-to-b from-brand-wash to-white px-10 pt-8"
+              svg-class="h-full w-full max-w-[16rem]"
+              photo-frame="h-52"
+            />
             <div class="flex flex-1 flex-col p-7">
               <h3 class="text-2xl">{{ j.title }}</h3>
               <p class="mt-2 text-steel">{{ j.text }}</p>
@@ -98,6 +101,8 @@
         <li v-for="svc in SHIPPING_SERVICES" :key="svc.id"><ServiceCard :service="svc" /></li>
       </ul>
     </section>
+
+    <ImageTextBlock placement="home" flush-top />
 
     <!-- ─── Why us: full-width photo with a card over it ─── -->
     <section class="relative isolate overflow-hidden py-16 lg:py-28" aria-labelledby="why-title">
@@ -167,9 +172,12 @@
       <ul class="mt-12 grid gap-6 md:grid-cols-3">
         <li v-for="h in helpCards" :key="h.title">
           <NuxtLink :to="h.to" class="card card-link group flex h-full flex-col overflow-hidden">
-            <div class="flex h-44 items-end justify-center px-10 pt-6" :class="h.tone">
-              <Illustration :name="h.illustration" class="h-full w-full max-w-[13rem]" />
-            </div>
+            <IllustrationSpot
+              :name="h.illustration"
+              :frame="`flex h-44 items-end justify-center px-10 pt-6 ${h.tone}`"
+              svg-class="h-full w-full max-w-[13rem]"
+              photo-frame="h-44"
+            />
             <div class="flex flex-1 flex-col p-6">
               <h3 class="flex items-center justify-between gap-2 text-xl">
                 {{ h.title }}
