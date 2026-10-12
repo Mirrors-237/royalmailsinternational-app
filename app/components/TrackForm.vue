@@ -25,7 +25,7 @@
           @input="error = ''"
         >
       </div>
-      <button type="submit" class="btn btn-accent min-h-13 px-7">
+      <button type="submit" class="btn btn-brand min-h-13 px-7">
         Track
         <Icon name="lucide:arrow-right" class="size-5" aria-hidden="true" />
       </button>

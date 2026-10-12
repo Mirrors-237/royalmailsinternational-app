@@ -137,7 +137,7 @@
             <h2 id="steps-title" class="section-title mt-2">Every step, as it happens</h2>
             <p class="mt-4 text-lg text-white/70">Your parcel is scanned at every stage. Here's what each status on your tracking page means.</p>
           </div>
-          <NuxtLink to="/track" class="btn btn-accent">
+          <NuxtLink to="/track" class="btn btn-brand">
             <Icon name="lucide:search" class="size-5" aria-hidden="true" />
             Track a parcel
           </NuxtLink>

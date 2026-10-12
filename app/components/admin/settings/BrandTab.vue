@@ -59,7 +59,7 @@
               <p class="mt-6 text-2xl font-extrabold leading-tight tracking-tight">Shipping, <span class="text-accent">made simple.</span></p>
               <div class="glass mt-4 flex items-center gap-2 rounded-xl p-1.5">
                 <span class="flex-1 px-3 text-sm text-white/50">e.g. {{ (form.trackingPrefix || 'TRK').toUpperCase() }}…</span>
-                <span class="btn btn-accent min-h-9 px-4 text-sm">Track</span>
+                <span class="btn btn-brand min-h-9 px-4 text-sm">Track</span>
               </div>
             </div>
             <div class="flex items-center gap-4 bg-white p-5">
