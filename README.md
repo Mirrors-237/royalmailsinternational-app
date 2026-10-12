@@ -33,6 +33,6 @@ Application built from `Dockerfile` (port 3000), with the public domain and HTTP
 - Structured data: Organization and WebSite on the home page, BreadcrumbList on inner pages.
 - Tracking pages (`/track/<number>`) and the admin are not indexed. The site needs HTTPS: the admin session cookie is marked `Secure`.
 
-Before going live, fill in the parts marked "To be completed" on the Legal notice and Privacy pages
-(`app/pages/legal.vue`, `app/pages/privacy.vue`), and set the contact details, logo, key figures,
-testimonials and partners from the admin.
+Before going live, fill in the admin: contact details, logo, key figures, testimonials, partners,
+and the legal information (Brand and content → Legal pages; empty items are left out of the Legal notice
+and Privacy pages, and the tab shows how many are still empty).

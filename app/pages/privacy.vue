@@ -7,17 +7,13 @@
     />
 
     <article class="container-site max-w-3xl space-y-10 py-20 text-lg leading-relaxed">
-      <p class="rounded-card bg-amber-50 p-5 text-base text-amber-900">
-        This notice is a starting point. Have it reviewed against your actual processing and the law that applies to you
-        (for example UK GDPR and the Data Protection Act 2018) before publishing.
-      </p>
-
       <section>
         <h2 class="text-2xl">Who is responsible for your data</h2>
         <p class="mt-3">
           {{ settings.siteName }}<template v-if="fullAddress">, {{ fullAddress }}</template>, is the data controller.
-          You can contact us about your data at
-          <a v-if="settings.email" :href="`mailto:${settings.email}`" class="link">{{ settings.email }}</a>.
+          <template v-if="settings.email">
+            You can contact us about your data at <a :href="`mailto:${settings.email}`" class="link">{{ settings.email }}</a>.
+          </template>
         </p>
       </section>
 
@@ -31,17 +27,17 @@
         </ul>
       </section>
 
-      <section>
+      <section v-if="settings.dataRetention">
         <h2 class="text-2xl">How long we keep it</h2>
-        <p class="mt-3"><ToComplete>retention period for quote requests and contact messages</ToComplete></p>
+        <p class="mt-3 whitespace-pre-line">{{ settings.dataRetention }}</p>
       </section>
 
       <section>
         <h2 class="text-2xl">Who we share it with</h2>
         <p class="mt-3">
           We share shipment details only with the carriers and customs agents needed to deliver your shipment.
-          <ToComplete>other processors, e.g. email or hosting providers, and any transfers outside your country</ToComplete>
         </p>
+        <p v-if="settings.dataProcessors" class="mt-3 whitespace-pre-line">{{ settings.dataProcessors }}</p>
       </section>
 
       <section>
@@ -54,9 +50,9 @@
       <section>
         <h2 class="text-2xl">Your rights</h2>
         <p class="mt-3">
-          You can ask to access, correct or delete your data, or object to how we use it, by emailing
-          <a v-if="settings.email" :href="`mailto:${settings.email}`" class="link">{{ settings.email }}</a>.
-          You also have the right to complain to the data protection authority <ToComplete>name of the authority, e.g. the ICO in the UK</ToComplete>.
+          You can ask to access, correct or delete your data, or object to how we use it<template v-if="settings.email">, by emailing
+          <a :href="`mailto:${settings.email}`" class="link">{{ settings.email }}</a></template>.
+          You also have the right to complain to the data protection authority<template v-if="settings.supervisoryAuthority">: {{ settings.supervisoryAuthority }}</template>.
         </p>
       </section>
     </article>

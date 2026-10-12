@@ -19,6 +19,15 @@ export interface SiteSettings {
   accentColor: string
   metaTitle: string
   metaDescription: string
+  // Legal notice and privacy notice (empty = not shown, see components/admin/settings/LegalTab.vue)
+  legalForm: string
+  registrationNumber: string
+  vatNumber: string
+  publicationDirector: string
+  hostingProvider: string
+  dataRetention: string
+  dataProcessors: string
+  supervisoryAuthority: string
   logoUrl: string | null
   logoOnDarkUrl: string | null
   faviconUrl: string | null
@@ -50,6 +59,14 @@ export const SETTINGS_FALLBACK: SiteSettings = {
   accentColor:     '#f59e0b',
   metaTitle:       '',
   metaDescription: '',
+  legalForm:            '',
+  registrationNumber:   '',
+  vatNumber:            '',
+  publicationDirector:  '',
+  hostingProvider:      '',
+  dataRetention:        '',
+  dataProcessors:       '',
+  supervisoryAuthority: '',
   logoUrl:         null,
   logoOnDarkUrl:   null,
   faviconUrl:      null,

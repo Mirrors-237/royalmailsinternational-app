@@ -6,22 +6,21 @@
       <section>
         <h2 class="text-2xl">Website publisher</h2>
         <p class="mt-3">
-          This website is published by <strong>{{ settings.siteName }}</strong>,
-          <ToComplete>legal form and share capital</ToComplete>, registered under number
-          <ToComplete>company registration number</ToComplete>, VAT number <ToComplete>VAT number</ToComplete>.
+          This website is published by <strong>{{ settings.siteName }}</strong><template v-if="settings.legalForm">, {{ settings.legalForm }}</template><template v-if="settings.registrationNumber">, registered under number {{ settings.registrationNumber }}</template><template v-if="settings.vatNumber">, VAT number {{ settings.vatNumber }}</template>.
         </p>
         <p v-if="fullAddress" class="mt-3">Registered office: {{ fullAddress }}.</p>
-        <p class="mt-3">
+        <p v-if="settings.email || settings.phone" class="mt-3">
           Contact:
           <a v-if="settings.email" :href="`mailto:${settings.email}`" class="link">{{ settings.email }}</a>
-          <template v-if="settings.phone">, {{ settings.phone }}</template>
+          <template v-if="settings.email && settings.phone">, </template>
+          <template v-if="settings.phone">{{ settings.phone }}</template>
         </p>
-        <p class="mt-3">Publication director: <ToComplete>name of the person responsible</ToComplete>.</p>
+        <p v-if="settings.publicationDirector" class="mt-3">Publication director: {{ settings.publicationDirector }}.</p>
       </section>
 
-      <section>
+      <section v-if="settings.hostingProvider">
         <h2 class="text-2xl">Hosting</h2>
-        <p class="mt-3"><ToComplete>hosting provider's name, address and phone number</ToComplete></p>
+        <p class="mt-3 whitespace-pre-line">{{ settings.hostingProvider }}</p>
       </section>
 
       <section>

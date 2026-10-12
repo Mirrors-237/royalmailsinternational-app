@@ -25,6 +25,9 @@
       >
         <Icon :name="t.icon" class="size-4" aria-hidden="true" />
         {{ t.label }}
+        <span v-if="t.id === 'legal' && legalMissing" class="grid min-w-5 place-items-center rounded-full bg-amber-400 px-1.5 text-xs font-bold text-amber-950">
+          {{ legalMissing }}<span class="sr-only"> empty</span>
+        </span>
       </button>
     </div>
 
@@ -33,6 +36,7 @@
       <AdminSettingsContactTab v-else-if="tab === 'contact'" :settings="settings" @saved="apply" />
       <AdminSettingsHomeTab v-else-if="tab === 'home'" :settings="settings" @saved="apply" />
       <AdminSettingsPhotosTab v-else-if="tab === 'photos'" :settings="settings" @saved="apply" />
+      <AdminSettingsLegalTab v-else-if="tab === 'legal'" :settings="settings" @saved="apply" />
       <AdminSettingsSeoTab v-else :settings="settings" @saved="apply" />
     </div>
   </div>
@@ -51,6 +55,7 @@ const tabs = [
   { id: 'contact', label: 'Contact details',   icon: 'lucide:phone' },
   { id: 'home',    label: 'Home page',         icon: 'lucide:house' },
   { id: 'photos',  label: 'Photos',            icon: 'lucide:image' },
+  { id: 'legal',   label: 'Legal pages',       icon: 'lucide:scale' },
   { id: 'seo',     label: 'Search engines',    icon: 'lucide:search' },
 ] as const
 type TabId = typeof tabs[number]['id']
@@ -68,6 +73,8 @@ function move(step: number) {
 }
 
 const { data: settings } = await useAsyncData('adm-settings', () => adminFetch<SiteSettings>('/api/settings'))
+
+const legalMissing = computed(() => (settings.value ? missingLegalFields(settings.value).length : 0))
 
 // After each save: the admin (logo, colours) and the next website pages use the new values
 function apply(next: SiteSettings) {
