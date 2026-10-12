@@ -64,7 +64,10 @@
 </template>
 
 <script setup lang="ts">
-useSeoMeta({ title: 'Privacy notice' })
+usePageSeo({
+  title: 'Privacy notice',
+  description: 'What personal data we collect when you track a parcel, request a quote or contact us, and your rights.',
+})
 
 const settings = useSiteSettings()
 const fullAddress = computed(() => {

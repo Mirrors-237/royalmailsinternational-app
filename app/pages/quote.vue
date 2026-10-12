@@ -174,7 +174,7 @@
 
 <script setup lang="ts">
 const media = useMedia()
-useSeoMeta({
+usePageSeo({
   title: 'Get a quote',
   description: 'Request a free quote for air, sea or road freight. We reply within 24 hours.',
 })

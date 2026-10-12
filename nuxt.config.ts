@@ -26,6 +26,10 @@ export default defineNuxtConfig({
     apiBase: 'http://localhost:3001/api', // NUXT_API_BASE
     // true when Nuxt runs behind a reverse proxy (nginx, Traefik…) that sets X-Forwarded-For
     trustProxy: false, // NUXT_TRUST_PROXY
+    public: {
+      // Public address of the website, e.g. https://www.example.com: canonical URLs, sharing, sitemap
+      siteUrl: '', // NUXT_PUBLIC_SITE_URL
+    },
   },
 
   // Permanent redirects from the previous website's URLs (tracking links already sent to customers)

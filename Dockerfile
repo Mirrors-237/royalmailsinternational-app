@@ -1,5 +1,6 @@
 # Website and admin (Nuxt). Build: docker build -t courier-app .
-# NUXT_API_BASE must point to the API as seen from this container, e.g. http://api:3001/api
+# NUXT_API_BASE must point to the API as seen from this container, e.g. http://api:3001/api;
+# NUXT_PUBLIC_SITE_URL is the public address, e.g. https://www.example.com
 
 FROM node:24-alpine AS build
 WORKDIR /app

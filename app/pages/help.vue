@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 const media = useMedia()
-useSeoMeta({
+usePageSeo({
   title: 'Help and support',
   description: 'Answers about tracking, sending, receiving and paying for shipments.',
 })

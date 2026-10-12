@@ -79,7 +79,7 @@
 
     <section class="card p-6" aria-labelledby="logos-title">
       <h2 id="logos-title" class="text-xl">Logo and icon</h2>
-      <p class="mt-1 text-steel">Without a logo, the website shows your initials in a coloured square. PNG, JPG, WebP or SVG, up to 2 MB.</p>
+      <p class="mt-1 text-steel">Without a logo, the website shows your initials in a coloured square. PNG, JPG or SVG, up to 2 MB.</p>
       <div class="mt-5 grid gap-5 md:grid-cols-3">
         <AdminImageUpload
           label="Logo"
@@ -87,7 +87,7 @@
           :src="brandingSrc(settings.logoUrl)"
           :custom="!!settings.logoUrl"
           endpoint="/api/settings/branding/logo"
-          accept="image/png,image/jpeg,image/webp,image/svg+xml"
+          accept="image/png,image/jpeg,image/svg+xml"
           :max-bytes="2 * 1024 * 1024"
           @updated="(s) => emit('saved', s)"
         />
@@ -97,7 +97,7 @@
           :src="brandingSrc(settings.logoOnDarkUrl)"
           :custom="!!settings.logoOnDarkUrl"
           endpoint="/api/settings/branding/logoOnDark"
-          accept="image/png,image/jpeg,image/webp,image/svg+xml"
+          accept="image/png,image/jpeg,image/svg+xml"
           :max-bytes="2 * 1024 * 1024"
           dark
           empty-text="The standard logo is used on a white tile"

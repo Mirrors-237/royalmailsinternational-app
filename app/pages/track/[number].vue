@@ -203,9 +203,9 @@ const notFound    = computed(() => error.value?.statusCode === 404)
 const rateLimited = computed(() => error.value?.statusCode === 429)
 
 // Personal page: never indexed
-useSeoMeta({
+usePageSeo({
   title: () => `Tracking ${number.value}`,
-  robots: 'noindex, nofollow',
+  noindex: true,
 })
 
 const status  = computed(() => SHIPMENT_STATUS[tracking.value!.status])

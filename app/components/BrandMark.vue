@@ -35,14 +35,5 @@ const logo = computed(() =>
 // On a dark background with no dedicated version, the standard logo sits on a light tile
 const needsChip = computed(() => props.onDark && !settings.value.logoOnDarkUrl && !!settings.value.logoUrl)
 
-const STOP_WORDS = new Set(['of', 'the', 'and', '&', 'de', 'du', 'des', 'la', 'le', 'les', 'et'])
-
-const initials = computed(() =>
-  settings.value.siteName
-    .split(/\s+/)
-    .filter((w) => w && !STOP_WORDS.has(w.toLowerCase()))
-    .slice(0, 3)
-    .map((w) => w[0]!.toUpperCase())
-    .join(''),
-)
+const initials = computed(() => brandInitials(settings.value.siteName))
 </script>

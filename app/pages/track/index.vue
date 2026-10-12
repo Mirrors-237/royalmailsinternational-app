@@ -85,7 +85,7 @@ const media = useMedia()
 const settings = useSiteSettings()
 const prefix = computed(() => settings.value.trackingPrefix?.toUpperCase())
 
-useSeoMeta({
+usePageSeo({
   title: 'Track a parcel',
   description: () => `Track your ${settings.value.siteName} shipment step by step, from collection to delivery.`,
 })

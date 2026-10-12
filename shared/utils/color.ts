@@ -29,6 +29,13 @@ export function darken(hex: string, amount: number) {
   return '#' + [1, 3, 5].map((i) => channel(i).toString(16).padStart(2, '0')).join('')
 }
 
+// Mixes two colours in sRGB (amount of the second one, between 0 and 1)
+export function mix(hex: string, other: string, amount: number) {
+  const channel = (i: number) =>
+    Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - amount) + parseInt(other.slice(i, i + 2), 16) * amount)
+  return '#' + [1, 3, 5].map((i) => channel(i).toString(16).padStart(2, '0')).join('')
+}
+
 // Brand CSS variables injected on <html>: backgrounds and their matching text colour
 export function brandVars(primary: string, accent: string) {
   const brand      = safeHex(primary, '#0b5bd3')

@@ -242,6 +242,34 @@ interface Testimonial { id: number; name: string; role: string; company: string;
 
 // No page title: the template in app.vue then shows the SEO title set in the admin
 
+// The company and the website, for search engines (name, logo, contacts, social profiles)
+const settings = useSiteSettings()
+const siteUrl = useSiteUrl()
+useStructuredData('organization', () => {
+  const s = settings.value
+  const logo = brandingSrc(s.logoUrl)
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      compact({
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        name: s.siteName,
+        url: `${siteUrl}/`,
+        logo: logo ? `${siteUrl}${logo}` : undefined,
+        description: s.metaDescription || s.description,
+        email: s.email,
+        telephone: s.phone,
+        address: s.address || s.city
+          ? compact({ '@type': 'PostalAddress', streetAddress: s.address, postalCode: s.postalCode, addressLocality: s.city, addressCountry: s.country })
+          : undefined,
+        sameAs: [s.socialFacebook, s.socialLinkedin, s.socialTwitter].filter(Boolean),
+      }),
+      { '@type': 'WebSite', '@id': `${siteUrl}/#website`, url: `${siteUrl}/`, name: s.siteName, publisher: { '@id': `${siteUrl}/#organization` } },
+    ],
+  }
+})
+
 // Content managed in the admin; the page stays complete if the API doesn't respond
 const { data: partners }     = await useFetch<Partner[]>('/api/partners', { default: () => [] })
 const { data: testimonials } = await useFetch<Testimonial[]>('/api/testimonials', { default: () => [] })

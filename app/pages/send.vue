@@ -125,7 +125,7 @@
 
 <script setup lang="ts">
 const media = useMedia()
-useSeoMeta({
+usePageSeo({
   title: 'Send a parcel or freight',
   description: 'Air, sea and road freight with customs clearance. Compare services and get a quote within 24 hours.',
 })

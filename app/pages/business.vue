@@ -86,7 +86,7 @@
 
 <script setup lang="ts">
 const media = useMedia()
-useSeoMeta({
+usePageSeo({
   title: 'Shipping for businesses',
   description: 'Tailored air, sea and road freight for businesses, with customs clearance and consolidated tracking.',
 })

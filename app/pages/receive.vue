@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 const media = useMedia()
-useSeoMeta({
+usePageSeo({
   title: 'Receiving a parcel',
   description: 'Tracking, customs duties and delivery: what to expect when a parcel is on its way to you.',
 })

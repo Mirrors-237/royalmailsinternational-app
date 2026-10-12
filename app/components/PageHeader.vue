@@ -26,10 +26,24 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title: string
   intro?: string
   crumbs: { label: string; to?: string }[]
   image?: { src: string; alt: string }
 }>()
+
+// The same breadcrumb for search engines (shown under the page title in results)
+const route = useRoute()
+const siteUrl = useSiteUrl()
+useStructuredData('breadcrumb', () => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ label: 'Home', to: '/' }, ...props.crumbs].map((c, i, all) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    item: siteUrl + (i === all.length - 1 ? route.path : c.to ?? route.path),
+  })),
+}))
 </script>

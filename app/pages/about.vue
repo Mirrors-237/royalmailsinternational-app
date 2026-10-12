@@ -54,7 +54,7 @@
 const media = useMedia()
 const settings = useSiteSettings()
 
-useSeoMeta({
+usePageSeo({
   title: 'About us',
   description: () => settings.value.description,
 })

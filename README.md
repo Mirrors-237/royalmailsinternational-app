@@ -19,8 +19,19 @@ Application built from `Dockerfile` (port 3000), with the public domain and HTTP
 |---|---|
 | `NUXT_API_BASE` | The API on the internal network, e.g. `http://<API service name>:3001/api` |
 | `NUXT_TRUST_PROXY` | `true` behind Dokploy's reverse proxy (Traefik), so rate limits use the visitor's IP |
+| `NUXT_PUBLIC_SITE_URL` | Public address, e.g. `https://www.example.com`: canonical URLs, sharing image, sitemap |
 
-`GET /healthz` is the container health check. The site needs HTTPS: the admin session cookie is marked `Secure`.
+`GET /healthz` is the container health check.
+
+## Search engines and sharing
+
+- Every page has its title, description, canonical URL, Open Graph and X (Twitter) tags (`usePageSeo`, `app.vue`).
+- `/og-image.png` is the image shown when a page is shared: a 1200×630 PNG generated from the logo
+  (the version for dark backgrounds first), the tagline and the colours set in the admin
+  (`server/utils/share-image.ts`, font in `server/assets/fonts`). Its URL carries a version that changes with them.
+- `/sitemap.xml` lists the public pages (`shared/utils/site-pages.ts`); `/robots.txt` points to it and keeps `/admin` out.
+- Structured data: Organization and WebSite on the home page, BreadcrumbList on inner pages.
+- Tracking pages (`/track/<number>`) and the admin are not indexed. The site needs HTTPS: the admin session cookie is marked `Secure`.
 
 Before going live, fill in the parts marked "To be completed" on the Legal notice and Privacy pages
 (`app/pages/legal.vue`, `app/pages/privacy.vue`), and set the contact details, logo, key figures,

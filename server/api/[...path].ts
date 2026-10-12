@@ -24,7 +24,8 @@ export default defineEventHandler(async (event) => {
     fetchOptions: {
       method:  event.method,
       headers,
-      body:    hasBody ? await readRawBody(event, false) : undefined,
+      // A Buffer is a valid fetch body; its type (ArrayBufferLike) is wider than BodyInit expects
+      body:    hasBody ? (await readRawBody(event, false)) as BodyInit | undefined : undefined,
     },
   })
 })

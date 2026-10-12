@@ -41,7 +41,10 @@
 </template>
 
 <script setup lang="ts">
-useSeoMeta({ title: 'Legal notice' })
+usePageSeo({
+  title: 'Legal notice',
+  description: 'Who publishes and hosts this website, and how its content may be used.',
+})
 
 const settings = useSiteSettings()
 const fullAddress = computed(() => {

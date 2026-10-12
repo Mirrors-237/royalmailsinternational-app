@@ -125,7 +125,7 @@
 
 <script setup lang="ts">
 const media = useMedia()
-useSeoMeta({
+usePageSeo({
   title: 'Contact us',
   description: 'Contact our customer service team about a shipment, a quote or customs.',
 })
