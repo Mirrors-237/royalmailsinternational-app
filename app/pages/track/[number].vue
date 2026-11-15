@@ -47,7 +47,7 @@
           <div class="glass mt-8 rounded-3xl p-6 lg:p-8" :class="{ '!border-red-400/50 !bg-red-500/10': blocked }">
             <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-start">
               <div class="flex gap-4">
-                <span class="grid size-14 shrink-0 place-items-center rounded-2xl" :class="blocked ? 'bg-red-500/20 text-red-200' : step === 5 ? 'bg-emerald-400/15 text-emerald-300' : 'bg-accent/15 text-accent'" aria-hidden="true">
+                <span class="grid size-14 shrink-0 place-items-center rounded-2xl" :class="blocked ? 'bg-red-500/20 text-red-200' : tracking.status === 'DELIVERED' ? 'bg-emerald-400/15 text-emerald-300' : 'bg-accent/15 text-accent'" aria-hidden="true">
                   <Icon :name="status.icon" class="size-7" />
                 </span>
                 <div>
@@ -67,7 +67,7 @@
             </div>
 
             <div class="mt-8 border-t border-white/10 pt-7">
-              <TrackingProgress :step="step" :blocked="blocked" dark />
+              <TrackingProgress :checkpoints="tracking.checkpoints" dark />
             </div>
 
             <div v-if="blocked" class="mt-7 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-white p-4 text-ink">
@@ -149,7 +149,7 @@
         <aside class="space-y-6 lg:col-span-5">
           <div v-if="tracking.checkpoints.length" class="card overflow-hidden p-2">
             <ClientOnly>
-              <TrackingMap :checkpoints="tracking.checkpoints" :label="`Map of the route from ${tracking.origin.city} to ${tracking.destination.city}`" />
+              <TrackingMap :key="mapKey" :checkpoints="tracking.checkpoints" :label="`Map of the route from ${tracking.origin.city} to ${tracking.destination.city}`" />
               <template #fallback>
                 <div class="h-72 w-full animate-pulse rounded-xl bg-surface lg:h-80" />
               </template>
@@ -210,7 +210,6 @@ usePageSeo({
 
 const status  = computed(() => SHIPMENT_STATUS[tracking.value!.status])
 const blocked = computed(() => tracking.value?.status === 'EXCEPTION')
-const step    = computed(() => (tracking.value ? journeyStep(tracking.value) : 0))
 const mode    = computed(() => TRANSPORT_MODE[tracking.value!.transportMode] ?? TRANSPORT_MODE.MULTI)
 
 const lastEvent = computed(() =>
@@ -257,4 +256,43 @@ const helpLinks = computed(() => [
 
 const searchOpen = ref(false)
 watch(() => route.fullPath, () => { searchOpen.value = false })
+
+// New events show up without reloading: the page checks again every minute while it is on screen,
+// and as soon as the visitor comes back to the tab, until the parcel is delivered.
+// A failed check changes nothing on screen (refresh() would swap the page for the error message).
+const CHECK_EVERY_MS = 60_000
+let lastCheck = Date.now()
+let checking = false
+
+async function checkForUpdates() {
+  const current = tracking.value
+  if (!current || current.status === 'DELIVERED' || checking || document.visibilityState !== 'visible') return
+  checking = true
+  lastCheck = Date.now()
+  try {
+    const fresh = await $fetch<PublicTracking>(`/api/shipments/track/${encodeURIComponent(current.trackingNumber)}`)
+    if (fresh.trackingNumber === tracking.value?.trackingNumber) tracking.value = fresh
+  } catch {
+    // Network glitch or too many requests: keep what is shown, try again at the next check
+  } finally {
+    checking = false
+  }
+}
+
+function onVisibilityChange() {
+  if (Date.now() - lastCheck >= CHECK_EVERY_MS) checkForUpdates()
+}
+
+let timer: ReturnType<typeof setInterval> | undefined
+onMounted(() => {
+  timer = setInterval(checkForUpdates, CHECK_EVERY_MS)
+  document.addEventListener('visibilitychange', onVisibilityChange)
+})
+onBeforeUnmount(() => {
+  clearInterval(timer)
+  document.removeEventListener('visibilitychange', onVisibilityChange)
+})
+
+// The map is drawn once: give it a new key when the events change so it redraws
+const mapKey = computed(() => (tracking.value?.checkpoints ?? []).map((c) => c.occurredAt + c.lat + c.lng).join('|'))
 </script>

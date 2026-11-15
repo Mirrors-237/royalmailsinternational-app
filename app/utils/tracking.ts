@@ -28,17 +28,14 @@ export interface PublicTracking {
   checkpoints: TrackingCheckpoint[]
 }
 
-// The five main stages shown in the progress bar
-export const JOURNEY_STEPS = ['Collected', 'In transit', 'In customs', 'Out for delivery', 'Delivered'] as const
-
-export const SHIPMENT_STATUS: Record<ShipmentStatus, { label: string; summary: string; icon: string; step: number }> = {
-  PENDING:          { label: 'Shipment registered', summary: "The shipment has been created; the parcel hasn't been handed over to us yet.", icon: 'lucide:clock',            step: 0 },
-  PICKED_UP:        { label: 'Collected',           summary: 'The parcel is with us and getting ready to leave.',                            icon: 'lucide:package-check',    step: 1 },
-  IN_TRANSIT:       { label: 'In transit',          summary: 'The parcel is on its way to the destination country.',                          icon: 'lucide:send',             step: 2 },
-  IN_CUSTOMS:       { label: 'In customs',          summary: 'Customs formalities are being processed.',                                      icon: 'lucide:landmark',         step: 3 },
-  OUT_FOR_DELIVERY: { label: 'Out for delivery',    summary: 'The parcel is on its way to the recipient.',                                    icon: 'lucide:truck',            step: 4 },
-  DELIVERED:        { label: 'Delivered',           summary: 'The parcel has been delivered to the recipient.',                               icon: 'lucide:circle-check-big', step: 5 },
-  EXCEPTION:        { label: 'Delayed',             summary: 'An issue is delaying your shipment. Our team is dealing with it.',             icon: 'lucide:triangle-alert',   step: -1 },
+export const SHIPMENT_STATUS: Record<ShipmentStatus, { label: string; summary: string; icon: string }> = {
+  PENDING:          { label: 'Shipment registered', summary: "The shipment has been created; the parcel hasn't been handed over to us yet.", icon: 'lucide:clock' },
+  PICKED_UP:        { label: 'Collected',           summary: 'The parcel is with us and getting ready to leave.',                            icon: 'lucide:package-check' },
+  IN_TRANSIT:       { label: 'In transit',          summary: 'The parcel is on its way to the destination country.',                          icon: 'lucide:send' },
+  IN_CUSTOMS:       { label: 'In customs',          summary: 'Customs formalities are being processed.',                                      icon: 'lucide:landmark' },
+  OUT_FOR_DELIVERY: { label: 'Out for delivery',    summary: 'The parcel is on its way to the recipient.',                                    icon: 'lucide:truck' },
+  DELIVERED:        { label: 'Delivered',           summary: 'The parcel has been delivered to the recipient.',                               icon: 'lucide:circle-check-big' },
+  EXCEPTION:        { label: 'Delayed',             summary: 'An issue is delaying your shipment. Our team is dealing with it.',             icon: 'lucide:triangle-alert' },
 }
 
 export const CHECKPOINT_ICON: Record<CheckpointStatus, string> = {
@@ -53,16 +50,17 @@ export const CHECKPOINT_ICON: Record<CheckpointStatus, string> = {
   RETURNED:         'lucide:undo-2',
 }
 
-// Stage reached by each event type (places a delayed shipment in the progress bar)
-const CHECKPOINT_STEP: Record<CheckpointStatus, number> = {
-  PICKED_UP: 1, DEPARTED: 2, ARRIVED: 2, IN_CUSTOMS: 3, CUSTOMS_CLEARED: 3,
-  OUT_FOR_DELIVERY: 4, DELIVERED: 5, EXCEPTION: 0, RETURNED: 0,
-}
-
-export function journeyStep(t: PublicTracking) {
-  const step = SHIPMENT_STATUS[t.status].step
-  if (step >= 0) return step
-  return Math.max(0, ...t.checkpoints.map((c) => CHECKPOINT_STEP[c.status]))
+// Short name of each event type, shown under its point in the progress bar
+export const CHECKPOINT_LABEL: Record<CheckpointStatus, string> = {
+  PICKED_UP:        'Collected',
+  DEPARTED:         'Departed',
+  ARRIVED:          'Arrived',
+  IN_CUSTOMS:       'In customs',
+  CUSTOMS_CLEARED:  'Customs cleared',
+  OUT_FOR_DELIVERY: 'Out for delivery',
+  DELIVERED:        'Delivered',
+  EXCEPTION:        'Delayed',
+  RETURNED:         'Returned to sender',
 }
 
 export const TRANSPORT_MODE: Record<TransportMode, { label: string; icon: string }> = {
@@ -81,6 +79,7 @@ const fmt = (options: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat(LOC
 
 export const formatDay  = (iso: string) => fmt({ weekday: 'long', day: 'numeric', month: 'long' }).format(new Date(iso))
 export const formatDate = (iso: string) => fmt({ day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso))
+export const formatShortDay = (iso: string) => fmt({ day: 'numeric', month: 'short' }).format(new Date(iso))
 export const formatTime = (iso: string) => fmt({ hour: '2-digit', minute: '2-digit' }).format(new Date(iso))
 
 // Grouping key for the timeline (one group per day)
