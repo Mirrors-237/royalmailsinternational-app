@@ -1,6 +1,6 @@
 // Public response of GET /shipments/track/:number (no personal data)
 export type ShipmentStatus = 'PENDING' | 'PICKED_UP' | 'IN_TRANSIT' | 'IN_CUSTOMS' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'EXCEPTION'
-export type CheckpointStatus = 'PICKED_UP' | 'DEPARTED' | 'ARRIVED' | 'IN_CUSTOMS' | 'CUSTOMS_CLEARED' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'EXCEPTION' | 'RETURNED'
+export type CheckpointStatus = 'PICKED_UP' | 'DEPARTED' | 'IN_TRANSIT' | 'ARRIVED' | 'IN_CUSTOMS' | 'CUSTOMS_CLEARED' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'EXCEPTION' | 'RETURNED'
 export type TransportMode = 'AIR' | 'SEA' | 'ROAD' | 'MULTI'
 
 export interface TrackingCheckpoint {
@@ -41,6 +41,7 @@ export const SHIPMENT_STATUS: Record<ShipmentStatus, { label: string; summary: s
 export const CHECKPOINT_ICON: Record<CheckpointStatus, string> = {
   PICKED_UP:        'lucide:package-check',
   DEPARTED:         'lucide:send',
+  IN_TRANSIT:       'lucide:route',
   ARRIVED:          'lucide:map-pin-check',
   IN_CUSTOMS:       'lucide:landmark',
   CUSTOMS_CLEARED:  'lucide:shield-check',
@@ -54,6 +55,7 @@ export const CHECKPOINT_ICON: Record<CheckpointStatus, string> = {
 export const CHECKPOINT_LABEL: Record<CheckpointStatus, string> = {
   PICKED_UP:        'Collected',
   DEPARTED:         'Departed',
+  IN_TRANSIT:       'In transit',
   ARRIVED:          'Arrived',
   IN_CUSTOMS:       'In customs',
   CUSTOMS_CLEARED:  'Customs cleared',

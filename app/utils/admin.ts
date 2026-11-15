@@ -14,6 +14,7 @@ export const SHIPMENT_TONE: Record<ShipmentStatus, string> = {
 export const CHECKPOINT_TYPE: Record<CheckpointStatus, { label: string; example: (city: string) => string }> = {
   PICKED_UP:        { label: 'Collected',          example: (c) => `Parcel collected in ${c}` },
   DEPARTED:         { label: 'Departed',           example: (c) => `Departed ${c}` },
+  IN_TRANSIT:       { label: 'In transit',         example: (c) => `In transit via ${c}` },
   ARRIVED:          { label: 'Arrived',            example: (c) => `Arrived in ${c}` },
   IN_CUSTOMS:       { label: 'In customs',         example: (c) => `Customs clearance in progress in ${c}` },
   CUSTOMS_CLEARED:  { label: 'Customs cleared',    example: (c) => `Cleared customs in ${c}` },
