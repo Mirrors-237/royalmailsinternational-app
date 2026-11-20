@@ -64,7 +64,7 @@
 
     <div class="grid gap-4 sm:grid-cols-2">
       <FormField :id="`${uid}-label`" label="Text shown to the customer" :error="errors.statusLabel" class="sm:col-span-2">
-        <template #default="{ field }"><input v-bind="field" v-model="model.statusLabel" maxlength="200" @input="labelEdited = true"></template>
+        <template #default="{ field }"><textarea v-bind="field" v-model="model.statusLabel" rows="3" maxlength="200" @input="labelEdited = true" /></template>
       </FormField>
       <FormField :id="`${uid}-facility`" label="Site" hint="Airport, port, depot…" optional class="sm:col-span-2">
         <template #default="{ field }"><input v-bind="field" v-model.trim="model.facility" maxlength="200"></template>
@@ -158,7 +158,7 @@ async function submit() {
     country: model.country,
     lat: Number(model.lat),
     lng: Number(model.lng),
-    statusLabel: model.statusLabel.trim(),
+    statusLabel: model.statusLabel.replace(/\s+/g, ' ').trim(), // shown on one line to the customer
     customName: model.status === 'CUSTOM' ? model.customName.trim() : null,
     facility: model.facility ?? '',
     occurredAt: new Date(model.occurredAt).toISOString(),
