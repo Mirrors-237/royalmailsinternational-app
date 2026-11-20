@@ -25,7 +25,7 @@
           <span class="relative grid size-9 place-items-center rounded-full" :class="dotClass(cp, i === lastIndex)" aria-hidden="true">
             <Icon :name="CHECKPOINT_ICON[cp.status]" class="size-4" />
           </span>
-          <span class="mt-2.5 px-2 text-sm leading-tight" :class="labelClass(cp, i === lastIndex)">{{ CHECKPOINT_LABEL[cp.status] }}</span>
+          <span class="mt-2.5 px-2 text-sm leading-tight wrap-anywhere" :class="labelClass(cp, i === lastIndex)">{{ checkpointName(cp) }}</span>
           <span class="mt-1 px-2 text-xs leading-snug" :class="tone.muted">
             {{ cp.city }}<br>
             <time :datetime="cp.occurredAt" class="tabular-nums">{{ formatShortDay(cp.occurredAt) }}, {{ formatTime(cp.occurredAt) }}</time>

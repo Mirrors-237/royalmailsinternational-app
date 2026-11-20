@@ -1,11 +1,12 @@
 // Public response of GET /shipments/track/:number (no personal data)
 export type ShipmentStatus = 'PENDING' | 'PICKED_UP' | 'IN_TRANSIT' | 'IN_CUSTOMS' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'EXCEPTION'
-export type CheckpointStatus = 'PICKED_UP' | 'DEPARTED' | 'IN_TRANSIT' | 'ARRIVED' | 'IN_CUSTOMS' | 'CUSTOMS_CLEARED' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'EXCEPTION' | 'RETURNED'
+export type CheckpointStatus = 'PICKED_UP' | 'DEPARTED' | 'IN_TRANSIT' | 'ARRIVED' | 'IN_CUSTOMS' | 'CUSTOMS_CLEARED' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'EXCEPTION' | 'RETURNED' | 'CUSTOM'
 export type TransportMode = 'AIR' | 'SEA' | 'ROAD' | 'MULTI'
 
 export interface TrackingCheckpoint {
   status: CheckpointStatus
   statusLabel: string
+  customName: string | null // CUSTOM events: name chosen in the admin
   facility: string | null
   city: string
   country: string
@@ -49,6 +50,7 @@ export const CHECKPOINT_ICON: Record<CheckpointStatus, string> = {
   DELIVERED:        'lucide:circle-check-big',
   EXCEPTION:        'lucide:triangle-alert',
   RETURNED:         'lucide:undo-2',
+  CUSTOM:           'lucide:circle-dot',
 }
 
 // Short name of each event type, shown under its point in the progress bar
@@ -63,7 +65,12 @@ export const CHECKPOINT_LABEL: Record<CheckpointStatus, string> = {
   DELIVERED:        'Delivered',
   EXCEPTION:        'Delayed',
   RETURNED:         'Returned to sender',
+  CUSTOM:           'Update',
 }
+
+// Name of a step: the one chosen in the admin for a custom event, otherwise the name of its type
+export const checkpointName = (cp: { status: CheckpointStatus; customName?: string | null }) =>
+  (cp.status === 'CUSTOM' && cp.customName) || CHECKPOINT_LABEL[cp.status]
 
 export const TRANSPORT_MODE: Record<TransportMode, { label: string; icon: string }> = {
   AIR:   { label: 'Air freight',   icon: 'lucide:plane' },

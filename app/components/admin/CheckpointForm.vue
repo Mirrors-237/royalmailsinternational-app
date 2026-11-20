@@ -16,6 +16,16 @@
       <FormField :id="`${uid}-occurredAt`" label="Date and time" :error="errors.occurredAt">
         <template #default="{ field }"><input v-bind="field" v-model="model.occurredAt" type="datetime-local"></template>
       </FormField>
+      <FormField
+        v-if="model.status === 'CUSTOM'"
+        :id="`${uid}-customName`"
+        label="Name of the step"
+        hint="Shown under the step on the tracking page, e.g. Awaiting payment"
+        :error="errors.customName"
+        class="sm:col-span-2"
+      >
+        <template #default="{ field }"><input v-bind="field" v-model="model.customName" maxlength="40"></template>
+      </FormField>
 
       <FormField :id="`${uid}-city`" label="Town or city" :error="errors.city">
         <template #default="{ field }"><input v-bind="field" v-model.trim="model.city" maxlength="100" @change="located = ''"></template>
@@ -74,7 +84,7 @@
 <script setup lang="ts">
 export interface CheckpointValue {
   status: CheckpointStatus; city: string; country: string; lat: number | string; lng: number | string
-  statusLabel: string; facility?: string | null; occurredAt: string
+  statusLabel: string; customName?: string | null; facility?: string | null; occurredAt: string
 }
 
 const props = defineProps<{ initial?: Partial<CheckpointValue>; submitLabel: string; busy?: boolean; error?: string; cancellable?: boolean }>()
@@ -94,14 +104,15 @@ const model = reactive({
   lat: props.initial?.lat ?? '',
   lng: props.initial?.lng ?? '',
   statusLabel: props.initial?.statusLabel ?? '',
+  customName: props.initial?.customName ?? '',
   facility: props.initial?.facility ?? '',
   occurredAt: toLocalInput(props.initial?.occurredAt),
 })
 
 // Suggests the customer text from the event and the town, until it is edited by hand
 const labelEdited = ref(!!props.initial?.statusLabel)
-watch(() => [model.status, model.city], () => {
-  if (!labelEdited.value) model.statusLabel = model.city ? CHECKPOINT_TYPE[model.status].example(model.city) : ''
+watch(() => [model.status, model.city, model.customName], () => {
+  if (!labelEdited.value) model.statusLabel = model.city ? CHECKPOINT_TYPE[model.status].example(model.city, model.customName.trim()) : ''
 }, { immediate: true })
 
 const hasCoords = computed(() => model.lat !== '' && model.lng !== '')
@@ -129,6 +140,7 @@ async function submit() {
   for (const k of Object.keys(errors)) delete errors[k]
   if (!model.city) errors.city = 'Required.'
   if (!model.country) errors.country = 'Required.'
+  if (model.status === 'CUSTOM' && !model.customName.trim()) errors.customName = 'Required.'
   if (!model.statusLabel.trim()) errors.statusLabel = 'Required.'
   if (!model.occurredAt) errors.occurredAt = 'Required.'
   if (Object.keys(errors).length) return
@@ -147,6 +159,7 @@ async function submit() {
     lat: Number(model.lat),
     lng: Number(model.lng),
     statusLabel: model.statusLabel.trim(),
+    customName: model.status === 'CUSTOM' ? model.customName.trim() : null,
     facility: model.facility ?? '',
     occurredAt: new Date(model.occurredAt).toISOString(),
   })

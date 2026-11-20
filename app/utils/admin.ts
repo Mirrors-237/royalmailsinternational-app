@@ -11,7 +11,7 @@ export const SHIPMENT_TONE: Record<ShipmentStatus, string> = {
 }
 
 // Default wording of each tracking event, proposed when an event is added (it can be changed)
-export const CHECKPOINT_TYPE: Record<CheckpointStatus, { label: string; example: (city: string) => string }> = {
+export const CHECKPOINT_TYPE: Record<CheckpointStatus, { label: string; example: (city: string, name: string) => string }> = {
   PICKED_UP:        { label: 'Collected',          example: (c) => `Parcel collected in ${c}` },
   DEPARTED:         { label: 'Departed',           example: (c) => `Departed ${c}` },
   IN_TRANSIT:       { label: 'In transit',         example: (c) => `In transit via ${c}` },
@@ -22,6 +22,8 @@ export const CHECKPOINT_TYPE: Record<CheckpointStatus, { label: string; example:
   DELIVERED:        { label: 'Delivered',          example: (c) => `Delivered in ${c}` },
   EXCEPTION:        { label: 'Delay or incident',  example: (c) => `Delayed in ${c}` },
   RETURNED:         { label: 'Returned to sender', example: (c) => `Returned to sender from ${c}` },
+  // The admin names the step; the customer text starts from that name
+  CUSTOM:           { label: 'Custom',             example: (_c, name) => name },
 }
 
 export type LeadStatus = 'NEW' | 'CONTACTED' | 'QUOTED' | 'CONVERTED' | 'LOST'
@@ -46,7 +48,7 @@ export const formatDateTime = (iso: string) => dateTime.format(new Date(iso))
 export interface Paged<T> { items: T[]; total: number; page: number; limit: number }
 
 export interface AdminCheckpoint {
-  id: string; status: CheckpointStatus; statusLabel: string; facility: string | null
+  id: string; status: CheckpointStatus; statusLabel: string; customName: string | null; facility: string | null
   city: string; country: string; lat: string; lng: string; occurredAt: string
 }
 

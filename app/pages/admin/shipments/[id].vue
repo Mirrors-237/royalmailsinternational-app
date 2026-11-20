@@ -45,7 +45,7 @@
                 <div class="min-w-0 flex-1">
                   <p class="font-bold">{{ cp.statusLabel }}</p>
                   <p class="text-sm text-steel">
-                    {{ CHECKPOINT_TYPE[cp.status].label }} · {{ [cp.facility, cp.city, cp.country].filter(Boolean).join(', ') }}
+                    {{ cp.status === 'CUSTOM' ? `Custom: ${cp.customName}` : CHECKPOINT_TYPE[cp.status].label }} · {{ [cp.facility, cp.city, cp.country].filter(Boolean).join(', ') }}
                   </p>
                   <p class="text-sm text-steel">{{ formatDateTime(cp.occurredAt) }}</p>
                 </div>
